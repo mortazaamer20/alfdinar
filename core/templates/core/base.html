@@ -25,6 +25,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
       <ul class="nav-links">
+        <li class="nav-close"><button type="button" aria-label="إغلاق القائمة" onclick="document.querySelector('.nav-links').classList.remove('open')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+        </li>
         <li><a href="{% url 'core:home' %}"{% if active_page == 'index' %} class="active"{% endif %}>الرئيسية</a></li>
         <li><a href="{% url 'core:about' %}"{% if active_page == 'about' %} class="active"{% endif %}>عن المبادرة</a></li>
         <li><a href="{% url 'core:how' %}"{% if active_page == 'how' %} class="active"{% endif %}>كيف تعمل</a></li>
@@ -32,6 +36,7 @@
         <li><a href="{% url 'core:contact' %}"{% if active_page == 'contact' %} class="active"{% endif %}>تواصل معنا</a></li>
         <li class="nav-cta"><a href="{% url 'core:how' %}#subscribe" class="btn btn--primary">اشترك الآن</a></li>
       </ul>
+      <div class="nav-backdrop" onclick="document.querySelector('.nav-links').classList.remove('open')"></div>
     </div>
   </nav>
 </header>
