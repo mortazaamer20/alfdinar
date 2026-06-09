@@ -248,7 +248,7 @@ html.js .reveal.in{opacity:1;transform:none}
     flex-direction:column;align-items:stretch;gap:6px;padding:84px 22px 22px;
     box-shadow:var(--shadow-lg);transform:translateX(-100%);transition:.3s;margin:0}
   body[dir="rtl"] .nav-links{inset:0 auto 0 0;transform:translateX(-100%)}
-  .nav-links.open{transform:translateX(0)}
+  .nav-links.open,body[dir="rtl"] .nav-links.open{transform:translateX(0)}
   .nav-links a{padding:13px 16px}
   .nav-cta{margin:8px 0 0}
   .nav-toggle{display:inline-flex;margin-inline-start:auto}
