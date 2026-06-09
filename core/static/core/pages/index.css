@@ -111,8 +111,9 @@
 .cta-band h2{font-size:clamp(1.8rem,3.4vw,2.7rem);color:#fff;max-width:24ch;margin-inline:auto}
 .cta-band p{color:#bfd6c9;margin-top:16px;font-size:1.12rem;font-weight:300;max-width:50ch;margin-inline:auto}
 .cta-band .hero-cta{justify-content:center;margin-top:32px}
-.cta-band .deco{position:absolute;inset:0;opacity:.4;
+.cta-band .deco{position:absolute;inset:0;opacity:.4;pointer-events:none;
   background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.1) 1px, transparent 0);background-size:28px 28px}
+.cta-band .eyebrow,.cta-band h2,.cta-band p,.cta-band .hero-cta{position:relative;z-index:1}
 
 @media (max-width:980px){
   .hero-grid{grid-template-columns:1fr}
@@ -124,6 +125,8 @@
 }
 @media (max-width:560px){
   .steps,.cases,.math,.stat-grid{grid-template-columns:1fr}
+  .math-row{grid-template-columns:1fr;gap:10px}
+  .math-row .op{padding-block:4px}
   .hero-chip+.hero-chip{padding-inline-start:0;border:0}
   .ring-wrap{flex-direction:column;text-align:center}
 }
