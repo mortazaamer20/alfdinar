@@ -62,10 +62,10 @@ class Case(models.Model):
     image = models.ImageField('الصورة', upload_to='cases/', blank=True, null=True)
     tags = models.ManyToManyField(Tag, verbose_name='الوسوم', blank=True, related_name='cases')
 
-    collected_amount = models.BigIntegerField('المبلغ المجموع (دينار)', default=0)
+    collected_amount = models.BigIntegerField('المبلغ المجموع (دينار)', default=0,help_text='أدخل المبلغ بالدينار كاملاً، مثال: ٣٢٠٠٠٠٠ (٣٫٢ مليون). يُعرض تلقائياً بالملايين.')
     target_amount = models.BigIntegerField('المبلغ المستهدف (دينار)', default=0)
 
-    status = models.CharField('الحالة', max_length=10, choices=STATUS_CHOICES, default=ACTIVE)
+    status = models.CharField('الحالة', max_length=10, choices=STATUS_CHOICES, default=ACTIVE,help_text='أدخل المبلغ بالدينار كاملاً، مثال: ٥٠٠٠٠٠٠ (٥ مليون).')
     is_urgent = models.BooleanField('عاجلة', default=False)
     show_on_home = models.BooleanField('إظهار في الصفحة الرئيسية', default=False)
 
