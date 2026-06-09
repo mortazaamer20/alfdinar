@@ -1,0 +1,37 @@
+/* timeline */
+.timeline{position:relative;margin-top:48px}
+.timeline::before{content:"";position:absolute;inset-block:24px 24px;inset-inline-start:31px;width:2px;background:var(--line-strong)}
+.tstep{position:relative;display:grid;grid-template-columns:64px 1fr;gap:24px;padding-bottom:34px}
+.tstep:last-child{padding-bottom:0}
+.tstep .dot{width:64px;height:64px;border-radius:18px;background:var(--green-700);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:1.5rem;
+  box-shadow:0 8px 18px rgba(14,91,61,.22);z-index:1}
+.tstep:nth-child(even) .dot{background:var(--gold);color:#3a2c0c;box-shadow:0 8px 18px rgba(198,151,73,.28)}
+.tstep .body{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 28px;box-shadow:var(--shadow-sm)}
+.tstep h3{font-size:1.3rem;margin-bottom:8px}
+.tstep p{color:var(--ink-soft);font-weight:300;font-size:1.02rem}
+
+/* logistics flow */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.flow .fc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 24px;text-align:center;box-shadow:var(--shadow-sm)}
+.flow .fc .ic{width:60px;height:60px;border-radius:16px;background:var(--green-tint);color:var(--green-700);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.flow .fc .ic svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.6}
+.flow .fc h3{font-size:1.15rem;margin-bottom:8px}
+.flow .fc p{color:var(--ink-soft);font-weight:300;font-size:.95rem}
+.flow .arrow{display:none}
+
+/* subscribe block */
+.sub-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(32px,5vw,56px);align-items:center}
+.sub-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);overflow:hidden}
+.sub-card .top{background:linear-gradient(135deg,var(--green-800),var(--green-700));color:#fff;padding:26px 30px;position:relative}
+.sub-card .top .flagstrip{position:absolute;inset-inline:0;bottom:0}
+.sub-card .top .amt{font-family:var(--font-display);font-weight:700;font-size:2.4rem;line-height:1}
+.sub-card .top .amt small{font-size:1rem;font-weight:500;color:#bfd6c9}
+.sub-card .top p{color:#cfe3d7;font-size:.95rem;margin-top:4px;font-weight:300}
+.sub-card .form{padding:28px 30px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;color:var(--ink-soft);font-weight:300}
+.consent input{margin-top:4px}
+.feat-list .ic svg{stroke:currentColor}
+@media (max-width:880px){.flow{grid-template-columns:1fr}.sub-grid{grid-template-columns:1fr}}
+
+.form-error{color:var(--red);font-size:.85rem;font-weight:500;margin-top:-2px}

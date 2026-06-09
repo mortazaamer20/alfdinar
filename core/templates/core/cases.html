@@ -1,0 +1,64 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}الحالات المستفيدة — مبادرة ألف دينار{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'core/pages/cases.css' %}">{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="{% url 'core:home' %}">الرئيسية</a><span>/</span>الحالات المستفيدة</div>
+    <span class="eyebrow">الأثر</span>
+    <h1 style="margin-top:16px">حالاتٌ لمستها مساهمتك</h1>
+    <p>خلف كل رقمٍ في كشوفنا قصة عائلة. هنا نعرض الحالات التي ندعمها — قيد العمل والمكتملة — بشفافيةٍ وأمانة.</p>
+    <div class="filters">
+      <button class="chip active" data-f="all">الكل</button>
+      <button class="chip" data-f="urgent">عاجلة</button>
+      <button class="chip" data-f="active">قيد الدعم</button>
+      <button class="chip" data-f="done">مكتملة</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cases-grid" id="grid">
+      {% for case in cases %}{% include 'core/_case_card.html' with case=case show_loc=True %}{% endfor %}
+    </div>
+    <div class="empty" id="empty">لا توجد حالات ضمن هذا التصنيف حالياً.</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section--tight">
+  <div class="wrap">
+    <div class="quote reveal" style="text-align:center">
+      <span class="eyebrow eyebrow--light">كن سبباً</span>
+      <p style="margin-inline:auto;margin-top:16px">حالةٌ واحدة تنتظر ألف دينارٍ منك. مساهمتك القادمة قد تكون بدايتها السعيدة.</p>
+      <a href="{% url 'core:how' %}#subscribe" class="btn btn--gold btn--lg">ساهم الآن</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  const chips=document.querySelectorAll('.chip');
+  const cards=[...document.querySelectorAll('#grid .case')];
+  const empty=document.getElementById('empty');
+  chips.forEach(c=>c.addEventListener('click',()=>{
+    chips.forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    const f=c.dataset.f;
+    let shown=0;
+    cards.forEach(card=>{
+      const ok = f==='all' || card.dataset.cat.split(' ').includes(f);
+      card.style.display = ok ? '' : 'none';
+      if(ok) shown++;
+    });
+    empty.style.display = shown ? 'none' : 'block';
+  }));
+})();
+</script>
+{% endblock %}

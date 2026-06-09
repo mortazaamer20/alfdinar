@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %}
+{% load static ar_extras %}
+
+{% block title %}عن المبادرة — مبادرة ألف دينار{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'core/pages/about.css' %}">{% endblock %}
+
+{% block content %}
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="{% url 'core:home' %}">الرئيسية</a><span>/</span>عن المبادرة</div>
+    <span class="eyebrow">من نحن</span>
+    <h1 style="margin-top:16px">مبادرةٌ تكافلية تجمع القليل لتصنع الكثير</h1>
+    <p>«ألف دينار» مبادرة إنسانية تطوّعية تنطلق من قيم التكافل والإيثار، تجمع مساهمات رمزية من ضباط الحشد الشعبي لتحويلها إلى دعمٍ موثّقٍ يصل لمستحقيه.</p>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section">
+  <div class="wrap grid-2 align">
+    <div class="prose reveal">
+      <span class="eyebrow eyebrow--gold">الفكرة</span>
+      <h2 class="s-title" style="margin:16px 0 22px">من رحم الحاجة… وُلدت الفكرة</h2>
+      <p>لاحظنا أن كثيراً من العوائل المتعففة وعوائل الشهداء بحاجةٍ إلى سندٍ بسيطٍ ومستمر، وأن المساهمة الفردية مهما صَغُرت تصبح ذات أثرٍ كبير حين تجتمع.</p>
+      <p>من هنا جاءت فكرة <strong>«ألف دينار»</strong>: مبلغٌ رمزي لا يكاد يُذكر بالنسبة للفرد، لكنه حين يتضاعف بعدد المشتركين يتحوّل إلى صندوقٍ شهري قادر على إحداث فرقٍ حقيقي في حياة المحتاجين.</p>
+      <p>المبادرة مبنية على <strong>الشفافية الكاملة</strong> والإدارة الأمينة، بحيث يصل كل دينارٍ إلى مستحقه دون أي اقتطاعات.</p>
+    </div>
+    <div class="story-vis reveal">
+      <div class="ph" data-label="صورة تعبيرية للمبادرة"></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION / MISSION -->
+<section class="section" style="background:var(--cream-2)">
+  <div class="wrap">
+    <div class="center"><span class="eyebrow">ما الذي نسعى إليه</span>
+      <h2 class="s-title" style="margin-top:16px">رؤيتنا ورسالتنا</h2></div>
+    <div class="grid-2 reveal" style="margin-top:44px">
+      <div class="vcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg></div>
+        <h3>رؤيتنا</h3>
+        <p>مجتمعٌ متكافل لا يُترك فيه محتاجٌ دون سند، تكون فيه المساهمة الرمزية المنتظمة ثقافةً راسخة بين أبناء المؤسسة.</p>
+      </div>
+      <div class="vcard gold">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3>رسالتنا</h3>
+        <p>تنظيم العطاء الفردي ضمن إطارٍ مؤسسي شفاف، يضمن وصول الدعم لمستحقيه وتوثيق أثره بمصداقية كاملة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIVES -->
+<section class="section">
+  <div class="wrap grid-2 align">
+    <div class="reveal">
+      <span class="eyebrow eyebrow--gold">أهدافنا</span>
+      <h2 class="s-title" style="margin-top:16px">أهداف المبادرة</h2>
+      <p class="s-lead">غاياتٌ واضحة نعمل على تحقيقها في كل دورة.</p>
+    </div>
+    <div class="olist reveal">
+      <div class="oli"><span class="n num">١</span><div><h4>دعم العوائل المتعففة</h4><p>توفير سلال غذائية ومساعدات نقدية للعوائل الأكثر حاجة.</p></div></div>
+      <div class="oli"><span class="n num">٢</span><div><h4>رعاية عوائل الشهداء</h4><p>الوقوف إلى جانب عوائل الشهداء وتلبية احتياجاتها الأساسية.</p></div></div>
+      <div class="oli"><span class="n num">٣</span><div><h4>الحالات الإنسانية الطارئة</h4><p>التدخّل السريع في الحالات الصحية والإنسانية العاجلة.</p></div></div>
+      <div class="oli"><span class="n num">٤</span><div><h4>ترسيخ ثقافة التكافل</h4><p>جعل العطاء المنظّم سلوكاً جماعياً مستداماً.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPARENCY -->
+<section class="section--tight">
+  <div class="wrap">
+    <div class="transp reveal">
+      <div class="deco"></div>
+      <div style="position:relative;z-index:1">
+        <span class="eyebrow eyebrow--light">التزامنا</span>
+        <h2 style="color:#fff;margin-top:16px;font-size:clamp(1.7rem,3vw,2.4rem);max-width:24ch">الشفافية ليست خياراً… بل أساس المبادرة</h2>
+        <p style="color:#bfd6c9;margin-top:14px;max-width:56ch;font-weight:300;font-size:1.08rem">نلتزم بنشر كشف حساب تفصيلي بنهاية كل دورة، يوضّح إجمالي المساهمات وأوجه الصرف والجهات المستفيدة — ليطمئن كل مساهمٍ إلى أثر عطائه.</p>
+        <div class="transp-grid">
+          {% for stat in transparency_stats %}
+          <div class="t"><div class="v num">{{ stat.value|ar }}</div><div class="l">{{ stat.label }}</div></div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATRON -->
+<section class="section">
+  <div class="wrap">
+    <div class="patron reveal">
+      <img class="badge" src="{% static 'core/assets/logo.svg' %}" alt="شعار رابطة ضباط الحشد الشعبي">
+      <div>
+        <span class="eyebrow">برعاية رسمية</span>
+        <h2 class="s-title" style="font-size:clamp(1.5rem,2.6vw,2rem);margin:14px 0 10px">رابطة ضباط الحشد الشعبي</h2>
+        <p class="prose" style="margin:0"><span style="color:var(--ink-soft);font-weight:300;font-size:1.05rem">تحظى المبادرة برعاية واحتضان رابطة ضباط الحشد الشعبي، التي تُشرف على إدارتها وتضمن مصداقيتها واستمراريتها وفق أعلى معايير الأمانة والشفافية.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section--tight">
+  <div class="wrap">
+    <div class="quote reveal" style="text-align:center">
+      <div class="mark">”</div>
+      <p style="margin-inline:auto">يدٌ واحدة لا تصفّق… لكن آلاف الأيدي مجتمعةً تصنع المعجزات.</p>
+      <a href="{% url 'core:how' %}#subscribe" class="btn btn--gold btn--lg">انضمّ إلى المبادرة</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'core/base.html' %}
+{% load static ar_extras %}
+
+{% block title %}كيف تعمل المبادرة — مبادرة ألف دينار{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'core/pages/how.css' %}">{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="{% url 'core:home' %}">الرئيسية</a><span>/</span>كيف تعمل المبادرة</div>
+    <span class="eyebrow">الآلية</span>
+    <h1 style="margin-top:16px">كيف تعمل مبادرة «ألف دينار»؟</h1>
+    <p>من لحظة اشتراكك وحتى وصول الدعم لمستحقيه — رحلةٌ واضحة وشفافة، خطوةً بخطوة.</p>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section">
+  <div class="wrap" style="max-width:880px">
+    <div class="center"><span class="eyebrow eyebrow--gold">رحلة العطاء</span>
+      <h2 class="s-title" style="margin-top:16px">أربع خطوات من المساهمة إلى الأثر</h2></div>
+    <div class="timeline reveal">
+      <div class="tstep"><div class="dot num">١</div><div class="body">
+        <h3>الاشتراك والالتزام</h3>
+        <p>يسجّل الضابط اشتراكه في المبادرة ويلتزم بمساهمة شهرية رمزية قدرها ألف دينار، تُجمع بشكلٍ منتظم في بداية كل دورة.</p></div></div>
+      <div class="tstep"><div class="dot num">٢</div><div class="body">
+        <h3>تجميع المساهمات</h3>
+        <p>تُجمع المساهمات في صندوقٍ موحّد تُدار عليه حسابات معلنة، ويُرصد إجمالي الدورة بدقّة وشفافية كاملة.</p></div></div>
+      <div class="tstep"><div class="dot num">٣</div><div class="body">
+        <h3>دراسة الحالات وترتيب الأولويات</h3>
+        <p>تتلقّى اللجنة طلبات المساعدة، وتدرس كل حالة وفق معايير الاستحقاق والإلحاح، ثم تُرتّبها حسب الأولوية.</p></div></div>
+      <div class="tstep"><div class="dot num">٤</div><div class="body">
+        <h3>التوزيع والتوثيق</h3>
+        <p>يُصرف الدعم للمستحقين — سلالاً غذائية أو مساعدات نقدية أو علاجية — ويُوثّق الأثر بتقريرٍ منشور بنهاية الدورة.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGISTICS -->
+<section class="section" style="background:var(--cream-2)">
+  <div class="wrap">
+    <div class="center"><span class="eyebrow">آلية العمل والتنفيذ اللوجستي</span>
+      <h2 class="s-title" style="margin-top:16px">كيف يصل الدعم إلى مستحقيه</h2>
+      <p class="s-lead">ثلاث مراحل تضمن وصول كل دينارٍ إلى هدفه.</p></div>
+    <div class="flow reveal" style="margin-top:44px">
+      <div class="fc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7h18v12H3z"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+        <h3>الجمع المنظّم</h3><p>تُحصّل المساهمات الشهرية عبر قنواتٍ موثوقة وتُسجّل في كشف الدورة لحظةً بلحظة.</p></div>
+      <div class="fc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></div>
+        <h3>التدقيق والاعتماد</h3><p>تتحقّق اللجنة المالية من الحالات وتعتمد أوجه الصرف قبل أي توزيع.</p></div>
+      <div class="fc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4 8 4 8-4z"/><path d="M4 7v6c0 2 4 4 8 4s8-2 8-4V7"/></svg></div>
+        <h3>التسليم والتوثيق</h3><p>يُسلَّم الدعم للمستفيدين ويُوثّق بالصور والتقارير ضمن كشف حساب الدورة.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCIAL MODEL -->
+<section class="section">
+  <div class="wrap grid-2 align">
+    <div class="reveal">
+      <span class="eyebrow eyebrow--gold">الدراسة المالية</span>
+      <h2 class="s-title" style="margin-top:16px">الجدوى والميزانية المتوقعة</h2>
+      <p class="s-lead">الحسابات مبنية على التزام العدد المستهدف بالمساهمة الشهرية الكاملة.</p>
+      <div class="olist" style="margin-top:24px">
+        <div class="oli"><span class="n num">×</span><div><h4>١٬٠٠٠ دينار × {{ cycle.target_subscribers|ar }} مشترك</h4><p>إجمالي المساهمات المتوقع للدورة الواحدة.</p></div></div>
+        <div class="oli"><span class="n num">=</span><div><h4>{{ cycle.target_total|ar }} دينار شهرياً</h4><p>الإيراد الشهري المتوقّع للصندوق عند اكتمال العدد.</p></div></div>
+        <div class="oli"><span class="n num">∑</span><div><h4>أكثر من ٨٫٩ مليون دينار سنوياً</h4><p>الطاقة التمويلية السنوية المتوقعة للمبادرة.</p></div></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="quote">
+        <span class="eyebrow eyebrow--light">مبدأ التشغيل</span>
+        <p style="margin-top:18px">كلّما زاد عدد المشتركين، اتّسعت دائرة الخير — والهدف القادم هو اكتمال العدد المستهدف.</p>
+        <div class="by">المساهمة ثابتة · الأثر متضاعف</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBSCRIBE -->
+<section class="section" id="subscribe" style="background:var(--cream-2);scroll-margin-top:90px">
+  <div class="wrap sub-grid">
+    <div class="reveal">
+      <span class="eyebrow">الاشتراك</span>
+      <h2 class="s-title" style="margin-top:16px">ابدأ مساهمتك اليوم</h2>
+      <p class="s-lead">سجّل بياناتك وكن جزءاً من الدورة القادمة. سيتواصل معك فريق المبادرة لإتمام الاشتراك.</p>
+      <div class="feat-list" style="margin-top:28px">
+        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <div><h4>مساهمة رمزية</h4><p>ألف دينار فقط شهرياً — لا تكاد تُذكر، وأثرها كبير.</p></div></div>
+        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <div><h4>التزام مرن</h4><p>يمكنك تعديل أو إيقاف اشتراكك في أي وقت.</p></div></div>
+        <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <div><h4>تقرير بأثر عطائك</h4><p>تصلك خلاصة كل دورة لترى أين ذهبت مساهمتك.</p></div></div>
+      </div>
+    </div>
+    <div class="sub-card reveal">
+      <div class="top"><div class="amt num">١٬٠٠٠ <small>دينار / شهرياً</small></div>
+        <p>المساهمة الأساسية للمشترك</p><div class="flagstrip"><i></i><i></i><i></i><i></i></div></div>
+      {% if subscribed %}
+      <div style="padding:40px 30px;text-align:center">
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--green-tint);color:var(--green-700);display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:8px">تم استلام طلبك بنجاح</h3>
+        <p style="color:var(--ink-soft);font-weight:300">شكراً لانضمامك. سيتواصل معك فريق المبادرة قريباً لإتمام الاشتراك.</p>
+      </div>
+      {% else %}
+      <form class="form" method="post" action="{% url 'core:how' %}#subscribe">
+        {% csrf_token %}
+        <div class="field"><label for="n">الاسم الكامل</label>{{ form.full_name }}
+          {% if form.full_name.errors %}<div class="form-error">{{ form.full_name.errors|striptags }}</div>{% endif %}</div>
+        <div class="form-row">
+          <div class="field"><label for="r">الرتبة</label>{{ form.rank }}</div>
+          <div class="field"><label for="u">التشكيل / الوحدة</label>{{ form.unit }}</div>
+        </div>
+        <div class="field"><label for="p">رقم الهاتف</label>{{ form.phone }}
+          {% if form.phone.errors %}<div class="form-error">{{ form.phone.errors|striptags }}</div>{% endif %}</div>
+        <div class="field"><label for="a">المساهمة الشهرية</label>{{ form.monthly_amount }}</div>
+        <label class="consent">{{ form.consent }} أوافق على الالتزام بالمساهمة الشهرية وعلى سياسة الشفافية الخاصة بالمبادرة.</label>
+        {% if form.consent.errors %}<div class="form-error">{{ form.consent.errors|striptags }}</div>{% endif %}
+        <button type="submit" class="btn btn--primary btn--lg" style="width:100%">تأكيد الاشتراك</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="wrap" style="max-width:820px">
+    <div class="center"><span class="eyebrow eyebrow--gold">أسئلة شائعة</span>
+      <h2 class="s-title" style="margin-top:16px">أسئلة قد تدور في ذهنك</h2></div>
+    <div class="faq reveal" style="margin-top:40px">
+      {% for faq in faqs %}
+      <details{% if faq.is_open %} open{% endif %}><summary>{{ faq.question }}<span class="pm">+</span></summary>
+        <p>{{ faq.answer }}</p></details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

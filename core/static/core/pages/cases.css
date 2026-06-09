@@ -1,0 +1,28 @@
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px}
+.chip{font-family:var(--font-body);font-weight:600;font-size:.95rem;padding:10px 20px;border-radius:999px;
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);cursor:pointer;transition:.18s}
+.chip:hover{border-color:var(--green-600);color:var(--green-700)}
+.chip.active{background:var(--green-700);border-color:var(--green-700);color:#fff}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.case{display:flex;flex-direction:column;overflow:hidden}
+.case .ph{height:200px;border-radius:0}
+.case .body{padding:24px;display:flex;flex-direction:column;flex:1}
+.case .tags{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.tag{font-size:.76rem;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--green-tint);color:var(--green-700)}
+.tag--urgent{background:var(--red-tint);color:var(--red)}
+.tag--gold{background:var(--gold-tint);color:var(--gold-deep)}
+.tag--done{background:var(--green-tint2);color:var(--green-800)}
+.case h3{font-size:1.2rem;margin-bottom:8px}
+.case .loc{font-size:.86rem;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.case .loc svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+.case p.desc{color:var(--ink-soft);font-size:.95rem;font-weight:300;margin-bottom:18px}
+.case .cprog{margin-top:auto}
+.case .cprog .bar{height:8px;border-radius:999px;background:var(--cream-2);overflow:hidden;margin-bottom:9px}
+.case .cprog .bar i{display:block;height:100%;background:var(--gold);border-radius:999px}
+.case .cprog .bar i.full{background:var(--green-600)}
+.case .cprog .meta{display:flex;justify-content:space-between;font-size:.86rem;color:var(--muted)}
+.case .cprog .meta b{color:var(--green-800);font-family:var(--font-display)}
+.case.is-done .ph{filter:grayscale(.3)}
+.empty{text-align:center;color:var(--muted);padding:60px 0;display:none}
+@media (max-width:880px){.cases-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.cases-grid{grid-template-columns:1fr}}

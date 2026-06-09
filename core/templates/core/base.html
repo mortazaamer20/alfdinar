@@ -1,0 +1,81 @@
+{% load static %}<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}مبادرة ألف دينار — تكافل إنساني{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'core/styles.css' %}">
+{% block extra_css %}{% endblock %}
+</head>
+<body dir="rtl">
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="nav-flag"><i></i><i></i><i></i><i></i></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="{% url 'core:home' %}">
+        <img class="brand__logo" src="{% static 'core/assets/logo.svg' %}" alt="شعار الحشد الشعبي">
+        <span class="brand__txt">
+          <span class="brand__name">مبادرة ألف دينار</span>
+          <span class="brand__sub">برعاية رابطة ضباط الحشد الشعبي</span>
+        </span>
+      </a>
+      <button class="nav-toggle" aria-label="القائمة" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <ul class="nav-links">
+        <li><a href="{% url 'core:home' %}"{% if active_page == 'index' %} class="active"{% endif %}>الرئيسية</a></li>
+        <li><a href="{% url 'core:about' %}"{% if active_page == 'about' %} class="active"{% endif %}>عن المبادرة</a></li>
+        <li><a href="{% url 'core:how' %}"{% if active_page == 'how' %} class="active"{% endif %}>كيف تعمل</a></li>
+        <li><a href="{% url 'core:cases' %}"{% if active_page == 'cases' %} class="active"{% endif %}>الحالات المستفيدة</a></li>
+        <li><a href="{% url 'core:contact' %}"{% if active_page == 'contact' %} class="active"{% endif %}>تواصل معنا</a></li>
+        <li class="nav-cta"><a href="{% url 'core:how' %}#subscribe" class="btn btn--primary">اشترك الآن</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+{% block content %}{% endblock %}
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="wrap footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img class="footer-badge" src="{% static 'core/assets/logo.svg' %}" alt="شعار">
+          <div><div style="font-family:var(--font-display);font-weight:700;color:#fff;font-size:1.15rem">مبادرة ألف دينار</div>
+            <div style="font-size:.8rem;color:#8aa195">برعاية رابطة ضباط الحشد الشعبي</div></div>
+        </div>
+        <p style="max-width:34ch">مبادرة تكافلية إنسانية تجمع المساهمات الرمزية لتحويلها إلى سندٍ موثّق للعوائل المتعففة.</p>
+      </div>
+      <div><h4>روابط</h4><ul>
+        <li><a href="{% url 'core:home' %}">الرئيسية</a></li>
+        <li><a href="{% url 'core:about' %}">عن المبادرة</a></li>
+        <li><a href="{% url 'core:how' %}">كيف تعمل</a></li>
+        <li><a href="{% url 'core:cases' %}">الحالات المستفيدة</a></li>
+      </ul></div>
+      <div><h4>المبادرة</h4><ul>
+        <li><a href="{% url 'core:how' %}#subscribe">الاشتراك</a></li>
+        <li><a href="{% url 'core:cases' %}">الحالات</a></li>
+        <li><a href="{% url 'core:about' %}">الشفافية المالية</a></li>
+        <li><a href="{% url 'core:contact' %}">الأسئلة الشائعة</a></li>
+      </ul></div>
+      <div><h4>تواصل معنا</h4><ul>
+        <li>بغداد — العراق</li>
+        <li><a href="mailto:info@alfdinar.iq">info@alfdinar.iq</a></li>
+        <li><a href="{% url 'core:contact' %}">نموذج التواصل</a></li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="footer-bottom">
+    <span>© ٢٠٢٦ مبادرة ألف دينار — جميع الحقوق محفوظة.</span>
+    <span>صُمّم بأمانةٍ لخدمة الإنسان.</span>
+  </div></div>
+</footer>
+
+<script src="{% static 'core/app.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

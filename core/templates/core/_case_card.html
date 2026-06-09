@@ -1,0 +1,22 @@
+{% load ar_extras %}
+<article class="case card{% if case.is_done %} is-done{% endif %}" data-cat="{{ case.data_cat }}">
+  <div class="ph"{% if case.image %} style="background-image:url('{{ case.image.url }}');background-size:cover;background-position:center"{% else %} data-label="صورة الحالة"{% endif %}></div>
+  <div class="body">
+    <div class="tags">{% for tag in case.tags.all %}<span class="{{ tag.css_class }}">{{ tag.name }}</span>{% endfor %}</div>
+    <h3>{{ case.title }}</h3>
+    {% if show_loc and case.location %}
+    <div class="loc"><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> {{ case.location }}</div>
+    {% endif %}
+    <p{% if show_loc %} class="desc"{% endif %}>{{ case.description }}</p>
+    <div class="cprog">
+      <div class="bar"><i{% if case.is_done %} class="full"{% endif %} style="width:{{ case.percent }}%"></i></div>
+      <div class="meta">
+        {% if case.is_done %}
+        <span>تم بحمد الله</span><span><b class="num">{{ case.collected_millions|ar }}</b> / <b class="num">{{ case.target_millions|ar }}</b> مليون</span>
+        {% else %}
+        <span>جُمع <b class="num">{{ case.collected_millions|ar }}</b> مليون</span><span>الهدف <b class="num">{{ case.target_millions|ar }}</b> مليون</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</article>
