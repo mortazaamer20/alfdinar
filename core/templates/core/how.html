@@ -21,8 +21,8 @@
       <h2 class="s-title" style="margin-top:16px">أربع خطوات من المساهمة إلى الأثر</h2></div>
     <div class="timeline reveal">
       <div class="tstep"><div class="dot num">١</div><div class="body">
-        <h3>الاشتراك والالتزام</h3>
-        <p>يسجّل الضابط اشتراكه في المبادرة ويلتزم بمساهمة شهرية رمزية قدرها ألف دينار، تُجمع بشكلٍ منتظم في بداية كل دورة.</p></div></div>
+        <h3>التسجيل والمساهمة</h3>
+        <p>يسجّل المساهم بياناته — والمبادرة مفتوحة للجميع — ويساهم شهرياً بما تيسّر، ألف دينار فأكثر، عبر تحويلٍ سريع لمحفظة المبادرة.</p></div></div>
       <div class="tstep"><div class="dot num">٢</div><div class="body">
         <h3>تجميع المساهمات</h3>
         <p>تُجمع المساهمات في صندوقٍ موحّد تُدار عليه حسابات معلنة، ويُرصد إجمالي الدورة بدقّة وشفافية كاملة.</p></div></div>
@@ -59,11 +59,11 @@
     <div class="reveal">
       <span class="eyebrow eyebrow--gold">الدراسة المالية</span>
       <h2 class="s-title" style="margin-top:16px">الجدوى والميزانية المتوقعة</h2>
-      <p class="s-lead">الحسابات مبنية على التزام العدد المستهدف بالمساهمة الشهرية الكاملة.</p>
+      <p class="s-lead">الأرقام أدناه حدٌّ أدنى تقديري — والمساهمة الفعلية مفتوحة، فكثيرون يتبرّعون بأكثر من ألف دينار.</p>
       <div class="olist" style="margin-top:24px">
-        <div class="oli"><span class="n num">×</span><div><h4>١٬٠٠٠ دينار × {{ cycle.target_subscribers|ar }} مشترك</h4><p>إجمالي المساهمات المتوقع للدورة الواحدة.</p></div></div>
-        <div class="oli"><span class="n num">=</span><div><h4>{{ cycle.target_total|ar }} دينار شهرياً</h4><p>الإيراد الشهري المتوقّع للصندوق عند اكتمال العدد.</p></div></div>
-        <div class="oli"><span class="n num">∑</span><div><h4>أكثر من ٨٫٩ مليون دينار سنوياً</h4><p>الطاقة التمويلية السنوية المتوقعة للمبادرة.</p></div></div>
+        <div class="oli"><span class="n num">×</span><div><h4>ألف دينار فأكثر × {{ cycle.target_subscribers|ar }} مساهم</h4><p>المساهمة الأدنى مضروبةً في العدد المستهدف للدورة.</p></div></div>
+        <div class="oli"><span class="n num">=</span><div><h4>{{ cycle.target_total|ar }} دينار شهرياً كحدٍّ أدنى</h4><p>الإيراد الشهري المتوقّع للصندوق — ويزداد بزيادة المساهمات.</p></div></div>
+        <div class="oli"><span class="n num">∑</span><div><h4>أكثر من ٨٫٩ مليون دينار سنوياً</h4><p>الطاقة التمويلية السنوية التقديرية للمبادرة.</p></div></div>
       </div>
     </div>
     <div class="reveal">
@@ -80,43 +80,63 @@
 <section class="section" id="subscribe" style="background:var(--cream-2);scroll-margin-top:90px">
   <div class="wrap sub-grid">
     <div class="reveal">
-      <span class="eyebrow">الاشتراك</span>
-      <h2 class="s-title" style="margin-top:16px">ابدأ مساهمتك اليوم</h2>
-      <p class="s-lead">سجّل بياناتك وكن جزءاً من الدورة القادمة. سيتواصل معك فريق المبادرة لإتمام الاشتراك.</p>
-      <div class="feat-list" style="margin-top:28px">
+      <span class="eyebrow">المساهمة</span>
+      <h2 class="s-title" style="margin-top:16px">ساهم اليوم… المبادرة مفتوحة للجميع</h2>
+      <p class="s-lead">التبرّع اختياري ومتاح لكل شخص — لست بحاجة لأن تكون منتسباً. ساهم بما تيسّر، ألف دينار فأكثر، وحوّل مباشرةً إلى محفظة المبادرة.</p>
+
+      <!-- transfer / wallet card -->
+      <div class="pay-card" style="margin-top:26px">
+        <div class="pay-head">
+          <span class="pay-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg></span>
+          <div>
+            <div class="pay-title">التحويل عبر {% if payment %}{{ payment.provider }}{% else %}سوبر كي العراق{% endif %}</div>
+            <div class="pay-sub">انسخ الرقم، وافتح تطبيق سوبر كي، ثم حوّل المبلغ.</div>
+          </div>
+        </div>
+        <div class="pay-number">
+          <span class="num" id="walletNumber">{% if payment %}{{ payment.wallet_number }}{% else %}—{% endif %}</span>
+          <button type="button" class="copy-btn" data-copy="#walletNumber" aria-label="نسخ الرقم">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            <span class="copy-label">نسخ</span>
+          </button>
+        </div>
+        {% if payment and payment.holder_name %}<div class="pay-holder">صاحب المحفظة: {{ payment.holder_name }}</div>{% endif %}
+        {% if payment and payment.note %}<div class="pay-note">{{ payment.note }}</div>{% endif %}
+      </div>
+
+      <div class="feat-list" style="margin-top:26px">
         <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div><h4>مساهمة رمزية</h4><p>ألف دينار فقط شهرياً — لا تكاد تُذكر، وأثرها كبير.</p></div></div>
+          <div><h4>مساهمة اختيارية ومرنة</h4><p>ألف دينار فأكثر — وكلٌّ حسب استطاعته، دون أي إلزام.</p></div></div>
         <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div><h4>التزام مرن</h4><p>يمكنك تعديل أو إيقاف اشتراكك في أي وقت.</p></div></div>
+          <div><h4>تذكير شهري عبر واتساب</h4><p>رسالة لطيفة شهرية للتذكير بالمساهمة — إن رغبت، ويمكنك إيقافها وقتما تشاء.</p></div></div>
         <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div><h4>تقرير بأثر عطائك</h4><p>تصلك خلاصة كل دورة لترى أين ذهبت مساهمتك.</p></div></div>
+          <div><h4>تقرير بأثر عطائك</h4><p>تصلك خلاصة كل دورة لترى أين ذهبت مساهمتك بشفافية.</p></div></div>
       </div>
     </div>
+
     <div class="sub-card reveal">
-      <div class="top"><div class="amt num">١٬٠٠٠ <small>دينار / شهرياً</small></div>
-        <p>المساهمة الأساسية للمشترك</p><div class="flagstrip"><i></i><i></i><i></i><i></i></div></div>
+      <div class="top"><div class="amt num">١٬٠٠٠ <small>دينار فأكثر / شهرياً</small></div>
+        <p>الحدّ الأدنى للمساهمة — والزيادة بحسب استطاعتك</p><div class="flagstrip"><i></i><i></i><i></i><i></i></div></div>
       {% if subscribed %}
       <div style="padding:40px 30px;text-align:center">
         <div style="width:64px;height:64px;border-radius:50%;background:var(--green-tint);color:var(--green-700);display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
           <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
         <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:8px">تم استلام طلبك بنجاح</h3>
-        <p style="color:var(--ink-soft);font-weight:300">شكراً لانضمامك. سيتواصل معك فريق المبادرة قريباً لإتمام الاشتراك.</p>
+        <p style="color:var(--ink-soft);font-weight:300">شكراً لانضمامك. سنرسل لك تذكيراً شهرياً لطيفاً عبر واتساب إن اخترت ذلك — وجزاك الله خيراً.</p>
       </div>
       {% else %}
       <form class="form" method="post" action="{% url 'core:how' %}#subscribe">
         {% csrf_token %}
         <div class="field"><label for="n">الاسم الكامل</label>{{ form.full_name }}
           {% if form.full_name.errors %}<div class="form-error">{{ form.full_name.errors|striptags }}</div>{% endif %}</div>
-        <div class="form-row">
-          <div class="field"><label for="r">الرتبة</label>{{ form.rank }}</div>
-          <div class="field"><label for="u">التشكيل / الوحدة</label>{{ form.unit }}</div>
-        </div>
-        <div class="field"><label for="p">رقم الهاتف</label>{{ form.phone }}
+        <div class="field"><label for="p">رقم الهاتف (واتساب)</label>{{ form.phone }}
+          <small class="field-hint">يُفضّل رقم مرتبط بواتساب لاستلام التذكير الشهري.</small>
           {% if form.phone.errors %}<div class="form-error">{{ form.phone.errors|striptags }}</div>{% endif %}</div>
         <div class="field"><label for="a">المساهمة الشهرية</label>{{ form.monthly_amount }}</div>
-        <label class="consent">{{ form.consent }} أوافق على الالتزام بالمساهمة الشهرية وعلى سياسة الشفافية الخاصة بالمبادرة.</label>
+        <label class="consent">{{ form.whatsapp_opt_in }} أرغب باستلام تذكير شهري لطيف عبر واتساب.</label>
+        <label class="consent">{{ form.consent }} أوافق على سياسة الشفافية الخاصة بالمبادرة، وأعلم أن المساهمة اختيارية.</label>
         {% if form.consent.errors %}<div class="form-error">{{ form.consent.errors|striptags }}</div>{% endif %}
-        <button type="submit" class="btn btn--primary btn--lg" style="width:100%">تأكيد الاشتراك</button>
+        <button type="submit" class="btn btn--primary btn--lg" style="width:100%">سجّلني في المبادرة</button>
       </form>
       {% endif %}
     </div>
@@ -136,4 +156,34 @@
     </div>
   </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/* copy-to-clipboard for the wallet number */
+document.querySelectorAll('.copy-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var el = document.querySelector(btn.dataset.copy);
+    if (!el) return;
+    var text = (el.textContent || '').trim();
+    var label = btn.querySelector('.copy-label');
+    var done = function () {
+      btn.classList.add('copied');
+      if (label) label.textContent = 'تم النسخ ✓';
+      setTimeout(function () {
+        btn.classList.remove('copied');
+        if (label) label.textContent = 'نسخ';
+      }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, done);
+    } else {
+      var r = document.createRange(); r.selectNode(el);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      try { document.execCommand('copy'); } catch (e) {}
+      s.removeAllRanges(); done();
+    }
+  });
+});
+</script>
 {% endblock %}

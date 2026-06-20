@@ -97,13 +97,7 @@
 .trust-badge img{width:56px;height:56px}
 .trust-badge .t{font-family:var(--font-display);font-weight:700;color:var(--green-800);font-size:1.05rem}
 .trust-badge .s{font-size:.82rem;color:var(--muted)}
-.feat-list{display:flex;flex-direction:column;gap:18px;margin-top:28px}
-.feat{display:flex;gap:15px;align-items:flex-start}
-.feat .ic{width:44px;height:44px;border-radius:12px;background:var(--green-tint);color:var(--green-700);
-  display:flex;align-items:center;justify-content:center;flex:none}
-.feat .ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
-.feat h4{font-size:1.08rem;margin-bottom:3px}
-.feat p{color:var(--ink-soft);font-size:.95rem;font-weight:300}
+/* .feat-list styles moved to the shared styles.css (used on home + how pages) */
 
 /* CTA band */
 .cta-band{background:linear-gradient(135deg,var(--green-800),var(--green-700));color:#fff;border-radius:var(--r-xl);
@@ -130,3 +124,15 @@
   .hero-chip+.hero-chip{padding-inline-start:0;border:0}
   .ring-wrap{flex-direction:column;text-align:center}
 }
+
+/* ---- field-visits teaser (home) ---- */
+.home-visits{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.visit-card{display:flex;flex-direction:column;overflow:hidden}
+.visit-card .ph{height:190px;border-radius:0}
+.visit-card .vbody{padding:22px;display:flex;flex-direction:column;flex:1}
+.visit-card .vmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;font-size:.84rem;color:var(--muted)}
+.visit-card .vdate{color:var(--green-700);font-family:var(--font-display);font-weight:600}
+.visit-card h3{font-size:1.15rem;margin-bottom:7px}
+.visit-card p{color:var(--ink-soft);font-size:.94rem;font-weight:300}
+@media (max-width:980px){.home-visits{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.home-visits{grid-template-columns:1fr}}

@@ -10,10 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# ---------------------------------------------------------------------------
+# OTPIQ (WhatsApp/SMS) — used for the optional monthly donation reminder.
+# Set OTPIQ_API_KEY in the environment (e.g. on PythonAnywhere); never commit it.
+# Verify the endpoint/fields against https://docs.otpiq.com if OTPIQ changes them.
+# ---------------------------------------------------------------------------
+OTPIQ_API_KEY = os.environ.get('OTPIQ_API_KEY', '')
+OTPIQ_BASE_URL = os.environ.get('OTPIQ_BASE_URL', 'https://api.otpiq.com')
+OTPIQ_PROVIDER = os.environ.get('OTPIQ_PROVIDER', 'whatsapp')  # whatsapp | sms | auto
 
 
 # Quick-start development settings - unsuitable for production

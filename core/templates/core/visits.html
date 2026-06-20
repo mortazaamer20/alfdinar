@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+{% load static ar_extras %}
+
+{% block title %}الزيارات الميدانية — مبادرة ألف دينار{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'core/pages/visits.css' %}">{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="{% url 'core:home' %}">الرئيسية</a><span>/</span>الزيارات الميدانية</div>
+    <span class="eyebrow">حضورٌ ميداني</span>
+    <h1 style="margin-top:16px">زياراتٌ لعوائل الشهداء والجرحى</h1>
+    <p>لا يقتصر دور الرابطة على الدعم المادي؛ بل نحرص على الوصول إلى عوائل الشهداء والجرحى في منازلهم، نقدّم لهم العون المادي والمعنوي، ونطمئن على أحوالهم — وهنا نوثّق بعضاً من هذه الزيارات.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {% if visits %}
+    <div class="visits-grid">
+      {% for v in visits %}
+      <article class="visit card">
+        <div class="ph"{% if v.image %} style="background-image:url('{{ v.image.url }}');background-size:cover;background-position:center"{% else %} data-label="صورة الزيارة"{% endif %}></div>
+        <div class="body">
+          <div class="vmeta">
+            {% if v.visit_date %}<span class="vdate"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> {{ v.date_fmt|ar }}</span>{% endif %}
+            {% if v.location %}<span class="vloc"><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> {{ v.location }}</span>{% endif %}
+          </div>
+          <h3>{{ v.title }}</h3>
+          <p>{% if v.summary %}{{ v.summary }}{% else %}{{ v.description }}{% endif %}</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty" style="display:block">لا توجد زيارات منشورة حالياً.</div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section--tight">
+  <div class="wrap">
+    <div class="quote reveal" style="text-align:center">
+      <span class="eyebrow eyebrow--light">يدٌ بيد</span>
+      <p style="margin-inline:auto;margin-top:16px">كلّ زيارةٍ نصل بها إلى عائلةٍ هي ثمرة مساهماتكم. كن سبباً في وصول الخير.</p>
+      <a href="{% url 'core:how' %}#subscribe" class="btn btn--gold btn--lg">ساهم الآن</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
