@@ -5,9 +5,11 @@ from .models import (
     ContactMessage,
     Cycle,
     FAQ,
+    PaymentInfo,
     Statistic,
     SubscriptionRequest,
     Tag,
+    Visit,
 )
 
 admin.site.site_header = 'إدارة مبادرة ألف دينار'
@@ -39,7 +41,7 @@ class CaseAdmin(admin.ModelAdmin):
 @admin.register(Cycle)
 class CycleAdmin(admin.ModelAdmin):
     list_display = ('month_label', 'current_subscribers', 'target_subscribers',
-                    'percent', 'active_cases', 'is_current')
+                    'amount_collected', 'percent', 'active_cases', 'is_current')
     list_editable = ('is_current',)
 
     @admin.display(description='نسبة الإنجاز')
@@ -72,9 +74,23 @@ class ContactMessageAdmin(admin.ModelAdmin):
 
 @admin.register(SubscriptionRequest)
 class SubscriptionRequestAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'rank', 'unit', 'phone', 'monthly_amount',
-                    'status', 'created_at')
-    list_filter = ('status', 'monthly_amount', 'created_at')
-    list_editable = ('status',)
-    search_fields = ('full_name', 'phone', 'rank', 'unit')
-    readonly_fields = ('created_at',)
+    list_display = ('full_name', 'phone', 'monthly_amount', 'whatsapp_opt_in',
+                    'is_active', 'status', 'last_reminder_at', 'created_at')
+    list_filter = ('status', 'is_active', 'whatsapp_opt_in', 'monthly_amount', 'created_at')
+    list_editable = ('is_active', 'status')
+    search_fields = ('full_name', 'phone')
+    readonly_fields = ('created_at', 'last_reminder_at')
+
+
+@admin.register(PaymentInfo)
+class PaymentInfoAdmin(admin.ModelAdmin):
+    list_display = ('provider', 'wallet_number', 'holder_name', 'is_active', 'updated_at')
+    list_editable = ('is_active',)
+
+
+@admin.register(Visit)
+class VisitAdmin(admin.ModelAdmin):
+    list_display = ('title', 'location', 'visit_date', 'show_on_home', 'order')
+    list_filter = ('show_on_home', 'visit_date')
+    list_editable = ('show_on_home', 'order')
+    search_fields = ('title', 'location', 'summary', 'description')

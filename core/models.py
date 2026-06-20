@@ -119,6 +119,9 @@ class Cycle(models.Model):
     month_label = models.CharField('عنوان الدورة', max_length=60, help_text='مثال: حزيران ٢٠٢٦')
     target_subscribers = models.PositiveIntegerField('عدد المشتركين المستهدف', default=0)
     current_subscribers = models.PositiveIntegerField('عدد المشتركين الحالي', default=0)
+    amount_collected = models.BigIntegerField(
+        'المبلغ المجموع فعلياً (دينار)', default=0,
+        help_text='المبلغ الحقيقي المجموع هذه الدورة بالدينار — يُعرض في الصفحة الرئيسية. مثال: ٧٥٠٠٠٠')
     active_cases = models.PositiveIntegerField('عدد الحالات قيد الدعم', default=0)
     is_current = models.BooleanField('الدورة الحالية', default=False)
     created_at = models.DateTimeField('تاريخ الإنشاء', auto_now_add=True)
@@ -142,13 +145,23 @@ class Cycle(models.Model):
         return max(0, self.target_subscribers - self.current_subscribers)
 
     @property
-    def collected_thousands(self):
-        """Total dinars raised this cycle, expressed in thousands (ألف)."""
-        return self.current_subscribers * CONTRIBUTION_DINARS // 1000
+    def collected_fmt(self):
+        """The actual amount raised this cycle, formatted with its unit.
+
+        Western digits are kept here and converted to Arabic-Indic by the
+        ``|ar`` template filter (which leaves the Arabic unit word intact).
+        e.g. 750000 -> "750 ألف" , 8400000 -> "8.4 مليون".
+        """
+        v = self.amount_collected
+        if v >= 1_000_000:
+            return ('%g' % round(v / 1_000_000, 1)) + ' مليون'
+        if v >= 1000:
+            return '%d ألف' % (v // 1000)
+        return str(v)
 
     @property
     def target_total(self):
-        """Target monthly fund total in dinars (target × contribution)."""
+        """Illustrative minimum monthly fund (target subscribers × 1000)."""
         return self.target_subscribers * CONTRIBUTION_DINARS
 
     @property
@@ -231,12 +244,17 @@ class ContactMessage(models.Model):
 
 
 class SubscriptionRequest(models.Model):
-    """A subscription request submitted through the «اشترك الآن» form."""
+    """A subscription request submitted through the «اشترك الآن» form.
+
+    Open to everyone (not only officers). The phone number is preferably a
+    WhatsApp number, used to send the optional monthly reminder via OTPIQ.
+    """
 
     AMOUNT_CHOICES = [
-        ('١٬٠٠٠ دينار (الأساسية)', '١٬٠٠٠ دينار (الأساسية)'),
+        ('١٬٠٠٠ دينار (الحد الأدنى)', '١٬٠٠٠ دينار (الحد الأدنى)'),
         ('٢٬٠٠٠ دينار', '٢٬٠٠٠ دينار'),
         ('٥٬٠٠٠ دينار', '٥٬٠٠٠ دينار'),
+        ('١٠٬٠٠٠ دينار', '١٠٬٠٠٠ دينار'),
         ('مبلغ آخر', 'مبلغ آخر'),
     ]
 
@@ -250,12 +268,15 @@ class SubscriptionRequest(models.Model):
     ]
 
     full_name = models.CharField('الاسم الكامل', max_length=160)
-    rank = models.CharField('الرتبة', max_length=80, blank=True)
-    unit = models.CharField('التشكيل / الوحدة', max_length=120, blank=True)
-    phone = models.CharField('رقم الهاتف', max_length=30)
+    phone = models.CharField('رقم الهاتف (واتساب)', max_length=30,
+                             help_text='يُفضّل أن يكون مرتبطاً بواتساب لاستلام التذكير الشهري.')
     monthly_amount = models.CharField('المساهمة الشهرية', max_length=40, choices=AMOUNT_CHOICES,
-                                      default='١٬٠٠٠ دينار (الأساسية)')
-    consent = models.BooleanField('الموافقة على الالتزام', default=False)
+                                      default='١٬٠٠٠ دينار (الحد الأدنى)')
+    consent = models.BooleanField('الموافقة', default=False)
+    whatsapp_opt_in = models.BooleanField('استلام تذكير واتساب الشهري', default=True)
+    is_active = models.BooleanField('مشترك فعّال', default=True,
+                                    help_text='ألغِ التفعيل لإيقاف التذكيرات عن هذا الشخص.')
+    last_reminder_at = models.DateTimeField('آخر تذكير', null=True, blank=True)
     status = models.CharField('الحالة', max_length=12, choices=STATUS_CHOICES, default=NEW)
     created_at = models.DateTimeField('تاريخ الطلب', auto_now_add=True)
 
@@ -266,3 +287,55 @@ class SubscriptionRequest(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+class PaymentInfo(models.Model):
+    """Wallet / transfer details shown on the subscribe section (admin-managed).
+
+    The most recently updated active record is displayed, so staff can update
+    the SuperKey wallet number any time without code changes.
+    """
+
+    provider = models.CharField('مزوّد المحفظة', max_length=80, default='سوبر كي العراق')
+    wallet_number = models.CharField('رقم المحفظة', max_length=60,
+                                     help_text='الرقم الذي يحوّل إليه المتبرّع عبر تطبيق سوبر كي.')
+    holder_name = models.CharField('اسم صاحب المحفظة', max_length=120, blank=True)
+    note = models.CharField('ملاحظة', max_length=200, blank=True,
+                            help_text='تظهر أسفل رقم المحفظة، مثل: يُرجى إرسال الاسم بعد التحويل.')
+    is_active = models.BooleanField('مفعّل', default=True)
+    updated_at = models.DateTimeField('آخر تحديث', auto_now=True)
+
+    class Meta:
+        verbose_name = 'معلومات التحويل'
+        verbose_name_plural = 'معلومات التحويل'
+        ordering = ['-updated_at']
+
+    def __str__(self):
+        return f'{self.provider} — {self.wallet_number}'
+
+
+class Visit(models.Model):
+    """A field visit to a martyr's / wounded soldier's family."""
+
+    title = models.CharField('العنوان', max_length=160)
+    location = models.CharField('الموقع', max_length=120, blank=True)
+    visit_date = models.DateField('تاريخ الزيارة', null=True, blank=True)
+    summary = models.CharField('مقتطف', max_length=240, blank=True,
+                               help_text='سطر مختصر يظهر في البطاقة والصفحة الرئيسية.')
+    description = models.TextField('التفاصيل', blank=True)
+    image = models.ImageField('الصورة', upload_to='visits/', blank=True, null=True)
+    show_on_home = models.BooleanField('إظهار في الصفحة الرئيسية', default=False)
+    order = models.PositiveIntegerField('الترتيب', default=0)
+    created_at = models.DateTimeField('تاريخ الإضافة', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'زيارة ميدانية'
+        verbose_name_plural = 'الزيارات الميدانية'
+        ordering = ['order', '-visit_date', '-created_at']
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def date_fmt(self):
+        return self.visit_date.strftime('%Y-%m-%d') if self.visit_date else ''

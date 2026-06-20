@@ -31,21 +31,19 @@ class ContactForm(forms.ModelForm):
 class SubscriptionForm(forms.ModelForm):
     consent = forms.BooleanField(
         required=True,
-        error_messages={'required': 'يجب الموافقة على الالتزام بالمساهمة وسياسة الشفافية.'},
+        error_messages={'required': 'يرجى الموافقة على سياسة الشفافية الخاصة بالمبادرة.'},
     )
 
     class Meta:
         model = SubscriptionRequest
-        fields = ['full_name', 'rank', 'unit', 'phone', 'monthly_amount', 'consent']
+        fields = ['full_name', 'phone', 'monthly_amount', 'whatsapp_opt_in', 'consent']
         widgets = {
-            'full_name': forms.TextInput(attrs={'id': 'n', 'placeholder': 'الاسم الثلاثي'}),
-            'rank': forms.TextInput(attrs={'id': 'r', 'placeholder': 'مثال: نقيب'}),
-            'unit': forms.TextInput(attrs={'id': 'u', 'placeholder': 'اسم الوحدة'}),
+            'full_name': forms.TextInput(attrs={'id': 'n', 'placeholder': 'اسمك الكامل'}),
             'phone': forms.TextInput(attrs={'id': 'p', 'type': 'tel', 'placeholder': '07XX XXX XXXX'}),
             'monthly_amount': forms.Select(attrs={'id': 'a'}),
+            'whatsapp_opt_in': forms.CheckboxInput(attrs={'id': 'wa'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['rank'].required = False
-        self.fields['unit'].required = False
+        self.fields['whatsapp_opt_in'].required = False

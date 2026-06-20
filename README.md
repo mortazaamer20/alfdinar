@@ -90,3 +90,39 @@ Everything shown on the site is editable in the admin:
   submitted forms) and reloads the defaults.
 - For production: set `DEBUG = False`, configure `ALLOWED_HOSTS`, move
   `SECRET_KEY` to an environment variable, and run `collectstatic`.
+
+## تذكير واتساب الشهري (OTPIQ)
+
+المبادرة مفتوحة للجميع، والمساهمة اختيارية (ألف دينار فأكثر). يمكن إرسال
+تذكير شهري لطيف للمساهمين عبر واتساب باستخدام خدمة OTPIQ.
+
+**الإعداد:** عيّن متغيّر البيئة على الخادم (مثل PythonAnywhere) — لا تضعه في الكود:
+
+```bash
+export OTPIQ_API_KEY="ضع_المفتاح_هنا"
+# اختياري: export OTPIQ_PROVIDER="whatsapp"   # whatsapp | sms | auto
+```
+
+**الإرسال يدوياً / مجدولاً:**
+
+```bash
+python manage.py send_monthly_reminders            # إرسال فعلي
+python manage.py send_monthly_reminders --dry-run  # معاينة دون إرسال
+python manage.py send_monthly_reminders --once-per-month  # تخطّي من ذُكّر مؤخراً
+```
+
+جدوِل الأمر مرّة شهرياً عبر **Scheduled Tasks** في PythonAnywhere.
+الرسالة لبقة وتتضمّن رقم محفظة سوبر كي تلقائياً.
+
+> إن غيّرت OTPIQ أسماء الحقول، فالتعديل في مكان واحد:
+> `core/services/otpiq.py` (الدالة `_build_payload`). راجع <https://docs.otpiq.com>.
+
+## محتوى يُدار من لوحة التحكم (إضافات)
+
+- **معلومات التحويل (سوبر كي):** رقم المحفظة واسم صاحبها وملاحظة — يظهر في صفحة
+  المساهمة مع زرّ نسخ. حدّث الرقم من القائمة «معلومات التحويل».
+- **الزيارات الميدانية:** زيارات عوائل الشهداء والجرحى (عنوان، موقع، تاريخ،
+  مقتطف، تفاصيل، صورة)، مع خيار الإظهار في الصفحة الرئيسية. تظهر في صفحة
+  «الزيارات الميدانية».
+- **الدورة:** أضف «المبلغ المجموع فعلياً» ليُعرض المبلغ الحقيقي في الرئيسية
+  بدل افتراض ألف دينار لكل مشترك.

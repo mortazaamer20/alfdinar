@@ -9,7 +9,9 @@ recreates them on each run.
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from core.models import Case, Cycle, FAQ, Statistic, Tag
+import datetime
+
+from core.models import Case, Cycle, FAQ, PaymentInfo, Statistic, Tag, Visit
 
 M = 1_000_000  # one million dinars
 
@@ -25,6 +27,8 @@ class Command(BaseCommand):
         Cycle.objects.all().delete()
         Statistic.objects.all().delete()
         FAQ.objects.all().delete()
+        Visit.objects.all().delete()
+        PaymentInfo.objects.all().delete()
 
         # --- Tags ---------------------------------------------------------
         tag_specs = {
@@ -85,9 +89,40 @@ class Command(BaseCommand):
             month_label='حزيران ٢٠٢٦',
             target_subscribers=746,
             current_subscribers=581,
+            amount_collected=1_240_000,  # actual dinars raised this cycle
             active_cases=9,
             is_current=True,
         )
+
+        # --- Payment / wallet info (replace with the real number in admin) -
+        PaymentInfo.objects.create(
+            provider='سوبر كي العراق',
+            wallet_number='0770 000 0000',
+            holder_name='مبادرة ألف دينار',
+            note='يُرجى إرسال اسمك بعد التحويل عبر نموذج التواصل ليُسجّل ضمن الدورة.',
+            is_active=True,
+        )
+
+        # --- Field visits -------------------------------------------------
+        visits = [
+            dict(title='زيارة عائلة الشهيد أبو حيدر', location='بغداد — الكرّادة',
+                 visit_date=datetime.date(2026, 6, 5), show_on_home=True, order=1,
+                 summary='وقفنا إلى جانب العائلة بسلّةٍ غذائية ودعمٍ نقدي، واطمأننا على أبنائها.',
+                 description='زار وفد الرابطة منزل عائلة الشهيد، وقدّم الدعم المادي والمعنوي، '
+                             'واستمع إلى احتياجاتها لإدراجها ضمن خطة الدعم القادمة.'),
+            dict(title='زيارة جريحٍ من أبطال الحشد', location='النجف الأشرف',
+                 visit_date=datetime.date(2026, 5, 22), show_on_home=True, order=2,
+                 summary='زيارة تفقّدية لأحد الجرحى وتقديم مساعدة لعلاجه ومتابعة حالته.',
+                 description='اطمأن الوفد على صحة الجريح، وقدّم مساهمةً لتغطية جزءٍ من تكاليف '
+                             'العلاج والأدوية، مع متابعةٍ دورية لحالته.'),
+            dict(title='زيارة عائلة شهيدٍ في بعقوبة', location='ديالى — بعقوبة',
+                 visit_date=datetime.date(2026, 5, 9), show_on_home=True, order=3,
+                 summary='تسليم سلال غذائية ومستلزمات للعائلة قبيل بداية الدورة.',
+                 description='ضمن جولات الرابطة الميدانية، سُلّمت العائلة سلالاً غذائية '
+                             'ومستلزمات أساسية، مع كلمة وفاءٍ لتضحيات الشهيد.'),
+        ]
+        for spec in visits:
+            Visit.objects.create(**spec)
 
         # --- Statistics ---------------------------------------------------
         stats = [
@@ -119,8 +154,14 @@ class Command(BaseCommand):
              'تُدرس كل حالة وفق معايير واضحة للاستحقاق والإلحاح، وتُعطى الأولوية للعوائل '
              'المتعففة وعوائل الشهداء والحالات الطارئة.', False, 4),
             ('هل المبادرة مقتصرة على الضباط فقط؟',
-             'تنطلق المبادرة من ضباط الحشد الشعبي كنواة أساسية، مع إمكانية توسّعها مستقبلاً '
-             'لتشمل داعمين آخرين.', False, 5),
+             'لا، المبادرة مفتوحة للجميع. انطلقت برعاية رابطة ضباط الحشد الشعبي، '
+             'لكنّ باب المساهمة متاحٌ لكل من يرغب بفعل الخير.', False, 5),
+            ('كم مقدار المساهمة؟ وهل هي إلزامية؟',
+             'المساهمة اختيارية تماماً، وحدّها الأدنى ألف دينار شهرياً، ويمكنك التبرّع بأكثر '
+             'حسب استطاعتك. تُحوّل المبالغ عبر محفظة سوبر كي العراق المعروضة في صفحة المساهمة.', False, 6),
+            ('كيف يصلني التذكير الشهري؟',
+             'إن اخترت ذلك عند التسجيل، تصلك رسالة واتساب لطيفة شهرياً للتذكير بالمساهمة — '
+             'ويمكنك إيقافها في أي وقت دون أي التزام.', False, 7),
         ]
         for question, answer, is_open, order in faqs:
             FAQ.objects.create(question=question, answer=answer, is_open=is_open, order=order)
