@@ -84,7 +84,8 @@ class SubscriptionRequestAdmin(admin.ModelAdmin):
 
 @admin.register(PaymentInfo)
 class PaymentInfoAdmin(admin.ModelAdmin):
-    list_display = ('provider', 'wallet_number', 'holder_name', 'is_active', 'updated_at')
+    list_display = ('provider', 'wallet_number', 'fallback_phone', 'holder_name',
+                    'is_active', 'updated_at')
     list_editable = ('is_active',)
 
 

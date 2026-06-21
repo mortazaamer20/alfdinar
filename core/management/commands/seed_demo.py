@@ -97,8 +97,9 @@ class Command(BaseCommand):
         # --- Payment / wallet info (replace with the real number in admin) -
         PaymentInfo.objects.create(
             provider='سوبر كي العراق',
-            wallet_number='0770 000 0000',
+            wallet_number='8916737730',
             holder_name='مبادرة لن ننسى أبطالنا',
+            fallback_phone='07736835130',
             note='يُرجى إرسال اسمك بعد التحويل عبر نموذج التواصل ليُسجّل ضمن الدورة.',
             is_active=True,
         )
