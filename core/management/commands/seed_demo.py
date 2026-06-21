@@ -98,7 +98,7 @@ class Command(BaseCommand):
         PaymentInfo.objects.create(
             provider='سوبر كي العراق',
             wallet_number='0770 000 0000',
-            holder_name='مبادرة ألف دينار',
+            holder_name='مبادرة لن ننسى أبطالنا',
             note='يُرجى إرسال اسمك بعد التحويل عبر نموذج التواصل ليُسجّل ضمن الدورة.',
             is_active=True,
         )
