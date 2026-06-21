@@ -12,8 +12,8 @@ from .models import (
     Visit,
 )
 
-admin.site.site_header = 'إدارة مبادرة ألف دينار'
-admin.site.site_title = 'مبادرة ألف دينار'
+admin.site.site_header = 'إدارة مبادرة لن ننسى أبطالنا'
+admin.site.site_title = 'مبادرة لن ننسى أبطالنا'
 admin.site.index_title = 'لوحة التحكم'
 
 
