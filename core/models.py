@@ -300,6 +300,10 @@ class PaymentInfo(models.Model):
     wallet_number = models.CharField('رقم المحفظة', max_length=60,
                                      help_text='الرقم الذي يحوّل إليه المتبرّع عبر تطبيق سوبر كي.')
     holder_name = models.CharField('اسم صاحب المحفظة', max_length=120, blank=True)
+    fallback_phone = models.CharField('رقم الهاتف البديل للتحويل', max_length=30, blank=True,
+                                      help_text='في حال تعذّر التحويل لرقم المحفظة، يمكن التحويل عبر هذا الرقم.')
+    qr_image = models.ImageField('صورة QR للتحويل', upload_to='payment/', blank=True, null=True,
+                                 help_text='صورة رمز الاستجابة السريعة (QR) للتحويل — اختيارية.')
     note = models.CharField('ملاحظة', max_length=200, blank=True,
                             help_text='تظهر أسفل رقم المحفظة، مثل: يُرجى إرسال الاسم بعد التحويل.')
     is_active = models.BooleanField('مفعّل', default=True)

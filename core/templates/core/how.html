@@ -93,14 +93,41 @@
             <div class="pay-sub">انسخ الرقم، وافتح تطبيق سوبر كي، ثم حوّل المبلغ.</div>
           </div>
         </div>
-        <div class="pay-number">
-          <span class="num" id="walletNumber">{% if payment %}{{ payment.wallet_number }}{% else %}—{% endif %}</span>
-          <button type="button" class="copy-btn" data-copy="#walletNumber" aria-label="نسخ الرقم">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
-            <span class="copy-label">نسخ</span>
-          </button>
+
+        <div class="pay-body">
+          <div class="pay-main">
+            <div class="pay-label">رقم المحفظة</div>
+            <div class="pay-number">
+              <span class="num" id="walletNumber">{% if payment %}{{ payment.wallet_number }}{% else %}—{% endif %}</span>
+              <button type="button" class="copy-btn" data-copy="#walletNumber" aria-label="نسخ الرقم">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                <span class="copy-label">نسخ</span>
+              </button>
+            </div>
+            {% if payment and payment.holder_name %}<div class="pay-holder">صاحب المحفظة: {{ payment.holder_name }}</div>{% endif %}
+
+            {% if payment and payment.fallback_phone %}
+            <div class="pay-fallback">
+              <div class="pay-fallback-txt">تعذّر التحويل إلى رقم المحفظة لأي سبب؟ يمكنك التحويل عبر رقم الهاتف:</div>
+              <div class="pay-number pay-number--alt">
+                <span class="num" id="fallbackPhone">{{ payment.fallback_phone }}</span>
+                <button type="button" class="copy-btn" data-copy="#fallbackPhone" aria-label="نسخ رقم الهاتف">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                  <span class="copy-label">نسخ</span>
+                </button>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+
+          {% if payment and payment.qr_image %}
+          <div class="pay-qr">
+            <img src="{{ payment.qr_image.url }}" alt="رمز QR للتحويل">
+            <span>امسح الرمز للتحويل</span>
+          </div>
+          {% endif %}
         </div>
-        {% if payment and payment.holder_name %}<div class="pay-holder">صاحب المحفظة: {{ payment.holder_name }}</div>{% endif %}
+
         {% if payment and payment.note %}<div class="pay-note">{{ payment.note }}</div>{% endif %}
       </div>
 
