@@ -10,7 +10,7 @@
     <div class="crumb"><a href="{% url 'core:home' %}">الرئيسية</a><span>/</span>الزيارات الميدانية</div>
     <span class="eyebrow">حضورٌ ميداني</span>
     <h1 style="margin-top:16px">زياراتٌ لعوائل الشهداء والجرحى</h1>
-    <p>لا يقتصر دور الرابطة على الدعم المادي؛ بل نحرص على الوصول إلى عوائل الشهداء والجرحى في منازلهم، نقدّم لهم العون المادي والمعنوي، ونطمئن على أحوالهم — وهنا نوثّق بعضاً من هذه الزيارات.</p>
+    <p>لا يقتصر دور التجمع على الدعم المادي؛ بل نحرص على الوصول إلى عوائل الشهداء والجرحى في منازلهم، نقدّم لهم العون المادي والمعنوي، ونطمئن على أحوالهم — وهنا نوثّق بعضاً من هذه الزيارات.</p>
   </div>
 </section>
 
@@ -19,6 +19,7 @@
     {% if visits %}
     <div class="visits-grid">
       {% for v in visits %}
+      <a class="card-link" href="{% url 'core:visit_detail' v.pk %}">
       <article class="visit card">
         <div class="ph"{% if v.image %} style="background-image:url('{{ v.image.url }}');background-size:cover;background-position:center"{% else %} data-label="صورة الزيارة"{% endif %}></div>
         <div class="body">
@@ -30,6 +31,7 @@
           <p>{% if v.summary %}{{ v.summary }}{% else %}{{ v.description }}{% endif %}</p>
         </div>
       </article>
+      </a>
       {% endfor %}
     </div>
     {% else %}

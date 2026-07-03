@@ -1,5 +1,5 @@
 """Server-rendered views for the «ألف دينار» site."""
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .forms import ContactForm, SubscriptionForm
 from .models import Case, Cycle, FAQ, PaymentInfo, Statistic, Visit
@@ -63,12 +63,31 @@ def visits(request):
     return render(request, 'core/visits.html', context)
 
 
+def visit_detail(request, pk):
+    visit = get_object_or_404(Visit.objects.prefetch_related('gallery_images'), pk=pk)
+    context = {
+        'active_page': 'visits',
+        'visit': visit,
+    }
+    return render(request, 'core/visit_detail.html', context)
+
+
 def cases(request):
     context = {
         'active_page': 'cases',
         'cases': Case.objects.prefetch_related('tags').all(),
     }
     return render(request, 'core/cases.html', context)
+
+
+def case_detail(request, pk):
+    case = get_object_or_404(
+        Case.objects.prefetch_related('tags', 'gallery_images'), pk=pk)
+    context = {
+        'active_page': 'cases',
+        'case': case,
+    }
+    return render(request, 'core/case_detail.html', context)
 
 
 def contact(request):
