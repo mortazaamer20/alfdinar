@@ -138,6 +138,9 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;line-height:1.25;let
 /* ---------- cards ---------- */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);transition:.25s}
 .card:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+/* Wraps a card to make the whole thing a link without altering its layout. */
+.card-link{display:contents;color:inherit}
+.card-link .card{cursor:pointer}
 
 /* ---------- feature list (home trust + subscribe pages) ---------- */
 .feat-list{display:flex;flex-direction:column;gap:18px;margin-top:28px}

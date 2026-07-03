@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Case,
+    CaseImage,
     ContactMessage,
     Cycle,
     FAQ,
@@ -10,6 +11,7 @@ from .models import (
     SubscriptionRequest,
     Tag,
     Visit,
+    VisitImage,
 )
 
 admin.site.site_header = 'إدارة مبادرة لن ننسى أبطالنا'
@@ -24,6 +26,11 @@ class TagAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
+class CaseImageInline(admin.TabularInline):
+    model = CaseImage
+    extra = 1
+
+
 @admin.register(Case)
 class CaseAdmin(admin.ModelAdmin):
     list_display = ('title', 'location', 'status', 'is_urgent', 'percent',
@@ -32,6 +39,7 @@ class CaseAdmin(admin.ModelAdmin):
     list_editable = ('order', 'show_on_home')
     search_fields = ('title', 'location', 'description')
     filter_horizontal = ('tags',)
+    inlines = [CaseImageInline]
 
     @admin.display(description='نسبة الإنجاز')
     def percent(self, obj):
@@ -89,9 +97,15 @@ class PaymentInfoAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
 
 
+class VisitImageInline(admin.TabularInline):
+    model = VisitImage
+    extra = 1
+
+
 @admin.register(Visit)
 class VisitAdmin(admin.ModelAdmin):
     list_display = ('title', 'location', 'visit_date', 'show_on_home', 'order')
     list_filter = ('show_on_home', 'visit_date')
     list_editable = ('show_on_home', 'order')
     search_fields = ('title', 'location', 'summary', 'description')
+    inlines = [VisitImageInline]

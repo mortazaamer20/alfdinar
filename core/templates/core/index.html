@@ -126,7 +126,7 @@
       <div class="ph" data-label="صورة من توزيع المساعدات"></div>
       <div class="trust-badge">
         <img src="{% static 'core/assets/logo.svg' %}" alt="شعار الحشد الشعبي">
-        <div><div class="t">برعاية رسمية</div><div class="s">رابطة ضباط الحشد الشعبي</div></div>
+        <div><div class="t">برعاية رسمية</div><div class="s">تجمع ضباط الحشد الشعبي</div></div>
       </div>
     </div>
     <div class="reveal">
@@ -135,7 +135,7 @@
       <p class="s-lead">كل مساهمة موثّقة، وكل صرفٍ معلن. نلتزم بأن يصل الدعم لمستحقيه دون أي اقتطاعات إدارية.</p>
       <div class="feat-list">
         <div class="feat"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
-          <div><h4>إدارة موثوقة</h4><p>إشراف مباشر من رابطة الضباط ولجنة مالية مستقلة.</p></div></div>
+          <div><h4>إدارة موثوقة</h4><p>إشراف مباشر من تجمع الضباط ولجنة مالية مستقلة.</p></div></div>
         <div class="feat"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 14 3-3 3 3 5-5"/></svg></span>
           <div><h4>تقارير دورية</h4><p>كشف حساب منشور بنهاية كل دورة يوضّح الإيرادات والمصروفات.</p></div></div>
         <div class="feat"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></span>
@@ -157,6 +157,7 @@
     </div>
     <div class="home-visits reveal" style="margin-top:40px">
       {% for v in home_visits %}
+      <a class="card-link" href="{% url 'core:visit_detail' v.pk %}">
       <article class="visit-card card">
         <div class="ph"{% if v.image %} style="background-image:url('{{ v.image.url }}');background-size:cover;background-position:center"{% else %} data-label="صورة الزيارة"{% endif %}></div>
         <div class="vbody">
@@ -165,6 +166,7 @@
           <p>{% if v.summary %}{{ v.summary }}{% else %}{{ v.description }}{% endif %}</p>
         </div>
       </article>
+      </a>
       {% endfor %}
     </div>
   </div>

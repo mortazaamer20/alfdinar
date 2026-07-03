@@ -1,0 +1,69 @@
+{% extends 'core/base.html' %}
+{% load static ar_extras %}
+
+{% block title %}{{ case.title }} — الحالات المستفيدة{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'core/pages/detail.css' %}">{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="wrap detail-wrap">
+    <div class="crumb"><a href="{% url 'core:home' %}">الرئيسية</a><span>/</span><a href="{% url 'core:cases' %}">الحالات المستفيدة</a><span>/</span>{{ case.title }}</div>
+    <span class="eyebrow">حالة مستفيدة</span>
+    <h1 style="margin-top:16px">{{ case.title }}</h1>
+    {% if case.location %}
+    <div class="detail-meta">
+      <span><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> {{ case.location }}</span>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap detail-wrap">
+    {% if case.tags.all %}
+    <div class="detail-tags">{% for tag in case.tags.all %}<span class="{{ tag.css_class }}">{{ tag.name }}</span>{% endfor %}</div>
+    {% endif %}
+
+    {% if case.image %}<img class="detail-cover" src="{{ case.image.url }}" alt="{{ case.title }}">{% endif %}
+
+    {% if case.description %}<div class="detail-body">{{ case.description }}</div>{% endif %}
+
+    <div class="detail-prog">
+      <div class="bar"><i{% if case.is_done %} class="full"{% endif %} style="width:{{ case.percent }}%"></i></div>
+      <div class="meta">
+        {% if case.is_done %}
+        <span>تم بحمد الله</span><span><b class="num">{{ case.collected_millions|ar }}</b> / <b class="num">{{ case.target_millions|ar }}</b> مليون</span>
+        {% else %}
+        <span>جُمع <b class="num">{{ case.collected_millions|ar }}</b> مليون</span><span>الهدف <b class="num">{{ case.target_millions|ar }}</b> مليون</span>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if case.video_file or case.video_embed_url %}
+    <h2 class="detail-h">الفيديو</h2>
+    {% if case.video_file %}
+    <video class="detail-video" controls preload="metadata" src="{{ case.video_file.url }}"></video>
+    {% else %}
+    <iframe class="detail-video" src="{{ case.video_embed_url }}" title="{{ case.title }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% endif %}
+    {% endif %}
+
+    {% if case.gallery_images.all %}
+    <h2 class="detail-h">صور إضافية</h2>
+    <div class="gallery">
+      {% for img in case.gallery_images.all %}
+      <figure>
+        <a href="{{ img.image.url }}" target="_blank" rel="noopener"><img src="{{ img.image.url }}" alt="{{ img.caption|default:case.title }}" loading="lazy"></a>
+        {% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
+      </figure>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <p style="margin-top:40px">
+      <a href="{% url 'core:how' %}#subscribe" class="btn btn--gold">ساهم الآن</a>
+      <a href="{% url 'core:cases' %}" class="btn btn--ghost">← كل الحالات</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

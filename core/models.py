@@ -4,11 +4,32 @@ All public-facing content (cases, the monthly cycle dashboard, statistics and
 FAQ) is editable from the Django admin, and the two public forms (contact +
 subscription) are stored here for staff to review.
 """
+import re
+
 from django.db import models
 
 # Monthly contribution per subscriber, in Iraqi dinars. Used to derive the
 # fund totals shown on the homepage dashboard from the subscriber count.
 CONTRIBUTION_DINARS = 1000
+
+
+def _youtube_embed(url):
+    """Return an embeddable YouTube URL for a normal watch/short link.
+
+    Accepts the usual shapes staff paste — ``youtube.com/watch?v=ID``,
+    ``youtu.be/ID`` and ``youtube.com/shorts/ID`` — and returns the
+    ``youtube.com/embed/ID`` form used inside an <iframe>. Any other URL is
+    returned unchanged so non-YouTube embeds still work.
+    """
+    if not url:
+        return ''
+    match = re.search(
+        r'(?:youtube\.com/(?:watch\?v=|shorts/|embed/)|youtu\.be/)([\w-]{11})',
+        url,
+    )
+    if match:
+        return f'https://www.youtube.com/embed/{match.group(1)}'
+    return url
 
 
 class Tag(models.Model):
@@ -59,7 +80,12 @@ class Case(models.Model):
     title = models.CharField('العنوان', max_length=160)
     location = models.CharField('الموقع', max_length=120, blank=True)
     description = models.TextField('الوصف', blank=True)
-    image = models.ImageField('الصورة', upload_to='cases/', blank=True, null=True)
+    image = models.ImageField('الصورة الرئيسية', upload_to='cases/', blank=True, null=True,
+                              help_text='الصورة التي تظهر على البطاقة. أضف صوراً إضافية من قسم «صور الحالة» أدناه.')
+    video_file = models.FileField('ملف فيديو', upload_to='cases/videos/', blank=True, null=True,
+                                  help_text='ارفع مقطع فيديو (mp4) — اختياري.')
+    video_url = models.URLField('رابط فيديو', blank=True,
+                                help_text='أو الصق رابط يوتيوب بدلاً من رفع ملف — اختياري.')
     tags = models.ManyToManyField(Tag, verbose_name='الوسوم', blank=True, related_name='cases')
 
     collected_amount = models.BigIntegerField('المبلغ المجموع (دينار)', default=0,help_text='أدخل المبلغ بالدينار كاملاً، مثال: ٣٢٠٠٠٠٠ (٣٫٢ مليون). يُعرض تلقائياً بالملايين.')
@@ -110,6 +136,28 @@ class Case(models.Model):
     @property
     def target_millions(self):
         return self._millions(self.target_amount)
+
+    @property
+    def video_embed_url(self):
+        return _youtube_embed(self.video_url)
+
+
+class CaseImage(models.Model):
+    """An additional gallery photo attached to a :class:`Case`."""
+
+    case = models.ForeignKey(Case, verbose_name='الحالة', on_delete=models.CASCADE,
+                             related_name='gallery_images')
+    image = models.ImageField('الصورة', upload_to='cases/')
+    caption = models.CharField('تعليق', max_length=160, blank=True)
+    order = models.PositiveIntegerField('الترتيب', default=0)
+
+    class Meta:
+        verbose_name = 'صورة حالة'
+        verbose_name_plural = 'صور الحالة'
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.caption or f'صورة #{self.pk}'
 
 
 class Cycle(models.Model):
@@ -327,7 +375,12 @@ class Visit(models.Model):
     summary = models.CharField('مقتطف', max_length=240, blank=True,
                                help_text='سطر مختصر يظهر في البطاقة والصفحة الرئيسية.')
     description = models.TextField('التفاصيل', blank=True)
-    image = models.ImageField('الصورة', upload_to='visits/', blank=True, null=True)
+    image = models.ImageField('الصورة الرئيسية', upload_to='visits/', blank=True, null=True,
+                              help_text='الصورة التي تظهر على البطاقة. أضف صوراً إضافية من قسم «صور الزيارة» أدناه.')
+    video_file = models.FileField('ملف فيديو', upload_to='visits/videos/', blank=True, null=True,
+                                  help_text='ارفع مقطع فيديو (mp4) — اختياري.')
+    video_url = models.URLField('رابط فيديو', blank=True,
+                                help_text='أو الصق رابط يوتيوب بدلاً من رفع ملف — اختياري.')
     show_on_home = models.BooleanField('إظهار في الصفحة الرئيسية', default=False)
     order = models.PositiveIntegerField('الترتيب', default=0)
     created_at = models.DateTimeField('تاريخ الإضافة', auto_now_add=True)
@@ -343,3 +396,25 @@ class Visit(models.Model):
     @property
     def date_fmt(self):
         return self.visit_date.strftime('%Y-%m-%d') if self.visit_date else ''
+
+    @property
+    def video_embed_url(self):
+        return _youtube_embed(self.video_url)
+
+
+class VisitImage(models.Model):
+    """An additional gallery photo attached to a :class:`Visit`."""
+
+    visit = models.ForeignKey(Visit, verbose_name='الزيارة', on_delete=models.CASCADE,
+                              related_name='gallery_images')
+    image = models.ImageField('الصورة', upload_to='visits/')
+    caption = models.CharField('تعليق', max_length=160, blank=True)
+    order = models.PositiveIntegerField('الترتيب', default=0)
+
+    class Meta:
+        verbose_name = 'صورة زيارة'
+        verbose_name_plural = 'صور الزيارة'
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.caption or f'صورة #{self.pk}'

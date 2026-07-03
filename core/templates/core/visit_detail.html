@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+{% load static ar_extras %}
+
+{% block title %}{{ visit.title }} — الزيارات الميدانية{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'core/pages/detail.css' %}">{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="wrap detail-wrap">
+    <div class="crumb"><a href="{% url 'core:home' %}">الرئيسية</a><span>/</span><a href="{% url 'core:visits' %}">الزيارات الميدانية</a><span>/</span>{{ visit.title }}</div>
+    <span class="eyebrow">حضورٌ ميداني</span>
+    <h1 style="margin-top:16px">{{ visit.title }}</h1>
+    <div class="detail-meta">
+      {% if visit.visit_date %}<span class="vdate"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> {{ visit.date_fmt|ar }}</span>{% endif %}
+      {% if visit.location %}<span><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> {{ visit.location }}</span>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap detail-wrap">
+    {% if visit.image %}<img class="detail-cover" src="{{ visit.image.url }}" alt="{{ visit.title }}">{% endif %}
+
+    {% if visit.summary %}<p class="s-lead" style="margin-top:0">{{ visit.summary }}</p>{% endif %}
+    {% if visit.description %}<div class="detail-body">{{ visit.description }}</div>{% endif %}
+
+    {% if visit.video_file or visit.video_embed_url %}
+    <h2 class="detail-h">الفيديو</h2>
+    {% if visit.video_file %}
+    <video class="detail-video" controls preload="metadata" src="{{ visit.video_file.url }}"></video>
+    {% else %}
+    <iframe class="detail-video" src="{{ visit.video_embed_url }}" title="{{ visit.title }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% endif %}
+    {% endif %}
+
+    {% if visit.gallery_images.all %}
+    <h2 class="detail-h">صور من الزيارة</h2>
+    <div class="gallery">
+      {% for img in visit.gallery_images.all %}
+      <figure>
+        <a href="{{ img.image.url }}" target="_blank" rel="noopener"><img src="{{ img.image.url }}" alt="{{ img.caption|default:visit.title }}" loading="lazy"></a>
+        {% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
+      </figure>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <p style="margin-top:40px"><a href="{% url 'core:visits' %}" class="btn btn--ghost">← كل الزيارات</a></p>
+  </div>
+</section>
+{% endblock %}
